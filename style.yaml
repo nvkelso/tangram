@@ -1,5 +1,4 @@
-global:
-    api_key: '' # put your nextzen API key here
+﻿global:
     language: en # optional ISO 2-char code
     language_text_source: |
         function() {
@@ -41,30 +40,30 @@ scene:
 
 fonts:
     Montserrat:
-        url: fonts/montserrat.woff
+        url: https://fonts.gstatic.com/s/montserrat/v7/zhcz-_WihjSQC0oHJ9TCYL3hpw3pgy2gAi-Ip7WPMi0.woff
 
-textures:
-    icons:
-        url: images/pois.png
-        filtering: mipmap
-        sprites:
-            # define sprites: [x origin, y origin, width, height]
-            plane: [0, 0, 32, 32]
-            tree: [0, 185, 32, 32]
-            sunburst: [0, 629, 32, 32]
-            restaurant: [0, 777, 32, 32]
-            cafe: [0, 814, 32, 32]
-            museum: [0, 518, 32, 32]
-            bar: [0, 887, 32, 32]
-            train: [0, 74, 32, 32]
-            bus: [0, 148, 32, 32]
-            hospital: [0, 444, 32, 32]
-            parking: [0, 1073, 32, 32]
-            info: [0, 1110, 32, 32]
-            hotel: [0, 259, 32, 32]
-            bookstore: [0, 333, 32, 32]
-            shield: [0, 1142, 32, 32]
-            arrow: [1, 1175, 22, 22]
+# textures:
+#     icons:
+#         url: images/pois.png
+#         filtering: mipmap
+#         sprites:
+#             # define sprites: [x origin, y origin, width, height]
+#             plane: [0, 0, 32, 32]
+#             tree: [0, 185, 32, 32]
+#             sunburst: [0, 629, 32, 32]
+#             restaurant: [0, 777, 32, 32]
+#             cafe: [0, 814, 32, 32]
+#             museum: [0, 518, 32, 32]
+#             bar: [0, 887, 32, 32]
+#             train: [0, 74, 32, 32]
+#             bus: [0, 148, 32, 32]
+#             hospital: [0, 444, 32, 32]
+#             parking: [0, 1073, 32, 32]
+#             info: [0, 1110, 32, 32]
+#             hotel: [0, 259, 32, 32]
+#             bookstore: [0, 333, 32, 32]
+#             shield: [0, 1142, 32, 32]
+#             arrow: [1, 1175, 22, 22]
 
 styles:
     buildings:
@@ -104,19 +103,11 @@ sources:
         max_zoom: 15
         url_params:
             api_key: NaqqS33fTUmyQcvbuIUCKA
-        # request_headers: # send custom headers with tile requests
-        #     Authorization: Bearer xxxxxxxxx
         # # Data filtering demo with 'scripts' and 'transform' properties:
         # # Tile data is passed through a 'transform' pre-processing function before Tangram geometry is built.
         # # 'transform' adds an 'intersects_park' property to each road that intersects a park feature.
         # # That feature is then filtered on below in the 'roads' layer.
         # scripts: ['https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js']
-        # Data filtering demo with 'scripts' and 'transform' properties:
-        # Tile data is passed through a 'transform' pre-processing function before Tangram geometry is built.
-        # 'transform' adds an 'intersects_park' property to each road that intersects a park feature.
-        # That feature is then filtered on below in the 'roads' layer.
-        # scripts:
-        #     turf: https://npmcdn.com/@turf/turf/turf.min.js
         # transform: |
         #     function(data, extra_data) {
         #         if (data.roads &&
@@ -411,51 +402,47 @@ layers:
                             style: italic
                             size: 12px
 
-        arrows:
-            # oneway arrows and shields are distinct groups!
-            filter: { oneway: yes, shield_text: false, $zoom: { min: 17 } }
-            draw:
-                points:
-                    texture: icons
-                    sprite: arrow
-                    size: [[17, 18px], [18, 20px], [20, 32px]]
-                    placement: spaced
-                    placement_spacing: [[17, 70px], [20, 175px]]
-                    angle: auto
+        # arrows:
+        #     # oneway arrows and shields are distinct groups!
+        #     filter: { oneway: yes, shield_text: false, $zoom: { min: 17 } }
+        #     draw:
+        #         points:
+        #             texture: icons
+        #             sprite: arrow
+        #             size: [[17, 18px], [18, 20px], [20, 32px]]
+        #             placement: spaced
+        #             placement_spacing: [[17, 70px], [20, 175px]]
+        #             angle: auto
 
-        shields:
-            filter:
-                network: 'US:I' # US interstates only in this demo
-                shield_text: true
-                $zoom: { min: 6 }
-            draw:
-                points:
-                    texture: icons
-                    sprite: shield
-                    # sprite: function() { return feature.network }
-                    priority: 2
-                    color: white
-                    size: 24px
-                    placement: midpoint
-                    placement_min_length_ratio:
-                        - [9, 0.1]
-                        - [10, 0.25]
-                        - [12, 1]
-                        - [14, 2.0]
-                    repeat_group: shields
-                    text:
-                        anchor: center
-                        text_source: shield_text
-                        font:
-                            family: Helvetica
-                            size: 11px
+        # shields:
+        #     filter:
+        #         network: 'US:I' # US interstates only in this demo
+        #         shield_text: true
+        #     draw:
+        #         points:
+        #             texture: icons
+        #             sprite: shield
+        #             # sprite: function() { return feature.network }
+        #             priority: 2
+        #             color: white
+        #             size: 24px
+        #             placement: midpoint
+        #             repeat_group: shields
+        #             cull_from_tile: true
+        #             text:
+        #                 repeat_distance: 150px
+        #                 anchor: center
+        #                 text_source: shield_text
+        #                 font:
+        #                     family: Helvetica
+        #                     size: 11px
 
-            # thin-out shields at low-zoom
-            thinning:
-                filter: { $zoom: { max: 11 } }
-                draw:
-                    points:
-                        repeat_distance: 100px
+        #     # thin-out shields at low-zoom
+        #     thinning:
+        #         filter: { $zoom: { max: 11 } }
+        #         draw:
+        #             points:
+        #                 repeat_distance: 75px
 
     buildings:
         data: { source: tilezen }
@@ -508,114 +495,114 @@ layers:
                         fill: darkred
                         stroke: { color: white, width: 3 }
 
-    pois:
-        data: { source: tilezen }
+    # pois:
+    #     data: { source: tilezen }
 
-        # all POIs are interactive
-        draw:
-            points:
-                texture: icons
-                interactive: true
+    #     # all POIs are interactive
+    #     draw:
+    #         points:
+    #             texture: icons
+    #             interactive: true
 
-        parks:
-            filter:
-                kind: [park, cemetery, graveyard]
-                any:
-                    - { $zoom: { min: 16 } }
-                    - { area: { min: 500px2 } }
-            draw:
-                points:
-                    sprite: tree
-                    # texture: null
-                    # color: red
-                    # outline: { width: 2px, color: white }
-                    priority: 2
-                    size: 16px
-                    text:
-                        text_source: global.language_text_source
-                        font:
-                            family: Lucida Grande
-                            size: 10pt
-                            style: italic
-                            fill: darkgreen
-                            stroke: { color: white, width: 3 }
+    #     parks:
+    #         filter:
+    #             kind: [park, cemetery, graveyard]
+    #             any:
+    #                 - { $zoom: { min: 16 } }
+    #                 - { area: { min: 500px2 } }
+    #         draw:
+    #             points:
+    #                 sprite: tree
+    #                 # texture: null
+    #                 # color: red
+    #                 # outline: { width: 2px, color: white }
+    #                 priority: 2
+    #                 size: 16px
+    #                 text:
+    #                     text_source: global.language_text_source
+    #                     font:
+    #                         family: Lucida Grande
+    #                         size: 10pt
+    #                         style: italic
+    #                         fill: darkgreen
+    #                         stroke: { color: white, width: 3 }
 
-        forest:
-            filter:
-                kind: forest
-                any:
-                    - { $zoom: { min: 7 }, tier: 1 }
-                    - { $zoom: { min: 9 }, tier: { max: 3 } }
-            draw:
-                text:
-                    priority: 2
-                    text_source: global.language_text_source
-                    font:
-                        family: Lucida Grande
-                        size: 9pt
-                        style: italic
-                        fill: darkgreen
-                        stroke: { color: white, width: 3 }
+    #     forest:
+    #         filter:
+    #             kind: forest
+    #             any:
+    #                 - { $zoom: { min: 7 }, tier: 1 }
+    #                 - { $zoom: { min: 9 }, tier: { max: 3 } }
+    #         draw:
+    #             text:
+    #                 priority: 2
+    #                 text_source: global.language_text_source
+    #                 font:
+    #                     family: Lucida Grande
+    #                     size: 9pt
+    #                     style: italic
+    #                     fill: darkgreen
+    #                     stroke: { color: white, width: 3 }
 
-        not_landuse:
-            filter:
-                name: true
-                not:
-                    kind: [peak, viewpoint, bicycle_rental, car_sharing, park, forest, cemetery, graveyard]
-                $zoom: { min: 13 }
-            draw:
-                points:
-                    size: [[13, [auto, 12px]], [15, [auto, 18px]], [20, 75%]]
-                    priority: 6
+    #     not_landuse:
+    #         filter:
+    #             name: true
+    #             not:
+    #                 kind: [peak, viewpoint, bicycle_rental, car_sharing, park, forest, cemetery, graveyard]
+    #             $zoom: { min: 13 }
+    #         draw:
+    #             points:
+    #                 size: [[13, [auto, 12px]], [15, [auto, 18px]], [20, 75%]]
+    #                 priority: 6
 
-            # add text label at higher zoom
-            labels:
-                filter:
-                    - { $zoom: { min: 17 } }
-                    - { $zoom: { min: 16 }, kind: station }
-                draw:
-                    points:
-                        text:
-                            text_source: global.language_text_source
-                            font:
-                                family: Montserrat
-                                size: 12px
-                                fill: black
+    #         # add text label at higher zoom
+    #         labels:
+    #             filter:
+    #                 - { $zoom: { min: 17 } }
+    #                 - { $zoom: { min: 16 }, kind: station }
+    #             draw:
+    #                 points:
+    #                     text:
+    #                         text_source: global.language_text_source
+    #                         font:
+    #                             family: Montserrat
+    #                             size: 12px
+    #                             fill: black
 
-            # add generic icon at high zoom
-            generic:
-                filter: { $zoom: { min: 18 } }
-                draw: { points: { sprite: info } }
+    #         # add generic icon at high zoom
+    #         generic:
+    #             filter: { $zoom: { min: 18 } }
+    #             draw: { points: { sprite: info } }
 
-            # examples of different icons mapped to feature properties
-            icons:
-                restaurant:
-                    filter: { kind: [restaurant] }
-                    draw: { points: { sprite: restaurant } }
-                cafe:
-                    filter: { kind: [cafe, convenience] }
-                    draw: { points: { sprite: cafe } }
-                bar:
-                    filter: { kind: [bar, pub] }
-                    draw: { points: { sprite: bar } }
-                culture:
-                    filter: { kind: [museum, library, church, place_of_worship, bank] }
-                    draw: { points: { sprite: museum } }
-                station:
-                    filter: { kind: [station] }
-                    draw: { points: { sprite: train, priority: 2, text: { optional: true } } }
-                hospital:
-                    filter: { kind: [hospital, pharmacy] }
-                    draw: { points: { sprite: hospital } }
-                hotel:
-                    filter: { kind: [hotel, hostel] }
-                    draw: { points: { sprite: hotel } }
-                bus_stop:
-                    filter: { kind: [bus_stop] }
-                    draw: { points: { sprite: bus } }
-                bookstore:
-                    filter: { kind: [bookstore] }
-                    draw: { points: { sprite: bookstore } }
+    #         # examples of different icons mapped to feature properties
+    #         icons:
+    #             restaurant:
+    #                 filter: { kind: [restaurant] }
+    #                 draw: { points: { sprite: restaurant } }
+    #             cafe:
+    #                 filter: { kind: [cafe, convenience] }
+    #                 draw: { points: { sprite: cafe } }
+    #             bar:
+    #                 filter: { kind: [bar, pub] }
+    #                 draw: { points: { sprite: bar } }
+    #             culture:
+    #                 filter: { kind: [museum, library, church, place_of_worship, bank] }
+    #                 draw: { points: { sprite: museum } }
+    #             station:
+    #                 filter: { kind: [station] }
+    #                 draw: { points: { sprite: train, priority: 2, optional: true } }
+    #             hospital:
+    #                 filter: { kind: [hospital, pharmacy] }
+    #                 draw: { points: { sprite: hospital } }
+    #             hotel:
+    #                 filter: { kind: [hotel, hostel] }
+    #                 draw: { points: { sprite: hotel } }
+    #             bus_stop:
+    #                 filter: { kind: [bus_stop] }
+    #                 draw: { points: { sprite: bus } }
+    #             bookstore:
+    #                 filter: { kind: [bookstore] }
+    #                 draw: { points: { sprite: bookstore } }
 
     boundaries:
         data: { source: tilezen}
@@ -725,7 +712,8 @@ layers:
                         visible: true
                         buffer: 2px
                         font:
-                            size: [[6, 14px], [8, 16px]]
+                            # weight: bold
+                            size: [[6, 12px], [8, 16px]]
 
                 # use short name when available at low-zooms
                 short:

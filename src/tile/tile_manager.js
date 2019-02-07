@@ -20,8 +20,13 @@ export default class TileManager {
         this.renderable_tiles = [];
         this.active_styles = [];
         this.collision = {
-            tile_keys: null,
             mesh_set: null,
+            tile_keys: null,
+            view: {
+                zoom: null,
+                pitch: null,
+                roll: null
+            },
             zoom: null,
             zoom_steps: 3 // divisions per zoom at which labels are re-collided (e.g. 0, 0.33, 0.66)
         };
@@ -184,6 +189,7 @@ export default class TileManager {
 
     updateProxyTiles () {
         if (this.view.zoom_direction === 0) {
+            // haven't zoomed yet, no proxy tiles have been created
             return;
         }
 
@@ -192,7 +198,7 @@ export default class TileManager {
 
         let proxy = false;
         this.forEachTile(tile => {
-            if (this.view.zoom_direction === 1) {
+            if (this.view.zoom_direction === 1) { // zooming in
                 if (tile.visible && !tile.labeled) {
                     const parent = this.pyramid.getAncestor(tile);
                     if (parent) {
@@ -201,7 +207,7 @@ export default class TileManager {
                     }
                 }
             }
-            else if (this.view.zoom_direction === -1) {
+            else if (this.view.zoom_direction === -1) { // zooming out
                 if (tile.visible && !tile.labeled) {
                     const descendants = this.pyramid.getDescendants(tile);
                     for (let i=0; i < descendants.length; i++) {

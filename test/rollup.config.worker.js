@@ -14,6 +14,7 @@ const config = {
         format: 'umd',
         sourcemap: 'inline',
         indent: false,
+        strict: false
     },
     plugins: [
         resolve({

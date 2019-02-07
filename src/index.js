@@ -1,7 +1,12 @@
 /*jshint worker: true*/
 
-// The leaflet layer plugin is currently the primary public API
-import {leafletLayer} from './leaflet_layer';
+// self-contained public API
+import {tangramLayer} from './tangramLayer';
+
+// marker API
+import Marker from './marker';
+
+// The scene worker is only activated when a worker thread is instantiated, but must always be loaded
 import Scene from './scene/scene';
 
 // Additional modules are exposed for debugging
@@ -54,7 +59,8 @@ const debug = {
 };
 
 export default {
-    leafletLayer,
+    tangramLayer,
+    Marker,
     debug,
     version
 };

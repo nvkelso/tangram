@@ -234,12 +234,13 @@ export default class Scene {
         }
 
         this.container = this.container || document.body;
+        this.container.style.height = "100%"; // necessary for react?
         this.canvas = document.createElement('canvas');
         this.canvas.style.position = 'absolute';
         this.canvas.style.top = 0;
         this.canvas.style.left = 0;
 
-        // Force tangram canvas underneath all leaflet layers, and set background to transparent
+        // Force tangram canvas underneath all other layers, and set background to transparent
         this.container.style.backgroundColor = 'transparent';
         this.container.appendChild(this.canvas);
 
@@ -397,6 +398,7 @@ export default class Scene {
     }
 
     renderLoop () {
+        // console.log('scene.renderLoop')
         this.render_loop_active = true; // only let the render loop instantiate once
 
         // Update and render the scene
@@ -424,6 +426,7 @@ export default class Scene {
     }
 
     update() {
+        // console.log('scene.update')
         // Determine which passes (if any) to render
         let main = this.dirty;
         let selection = this.selection ? this.selection.hasPendingRequests() : false;
@@ -1174,10 +1177,12 @@ export default class Scene {
             // just normalize top-level textures - necessary for adding base path to globals
             SceneLoader.normalizeTextures(this.config, this.config_bundle);
         }
-        this.trigger(loading ? 'load' : 'update', { config: this.config });
 
-        this.style_manager.init();
+        // this.style_manager.init(); // removed in latest master - still needed?
         this.view.reset();
+        this.view.updateBounds();
+        this.style_manager.init();
+
         this.createLights();
         this.createDataSources(loading);
         this.loadTextures();
@@ -1194,8 +1199,9 @@ export default class Scene {
 
         // Finish by updating bounds and re-rendering
         this.updating--;
-        this.view.updateBounds();
         this.requestRedraw();
+
+        this.trigger(loading ? 'load' : 'update', { config: this.config });
 
         return done.then(() => {
             this.last_render_count = 0; // force re-evaluation of selection map
