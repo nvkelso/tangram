@@ -157,7 +157,7 @@ void main() {
     // in proxy tiles are scaled down, they begin to overlap, and the fade is a simple way to ease the transition.
     // Value passed to fragment shader in the v_alpha_factor varying
     #ifdef TANGRAM_FADE_ON_ZOOM_OUT
-        v_alpha_factor *= clamp(1. + TANGRAM_FADE_ON_ZOOM_OUT_RATE * (u_map_position.z - u_tile_origin.z), 0., 1.);
+        v_alpha_factor *= smoothstep(-2., -1.5, u_map_position.z - u_tile_origin.z);
     #endif
 
     // World coordinates for 3d procedural textures

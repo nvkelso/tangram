@@ -23,7 +23,7 @@ export default class TileManager {
             tile_keys: null,
             mesh_set: null,
             zoom: null,
-            zoom_steps: 3 // divisions per zoom at which labels are re-collided (e.g. 0, 0.33, 0.66)
+            zoom_steps: 4 // divisions per zoom at which labels are re-collided (e.g. 0, 0.33, 0.66)
         };
 
         // Provide a hook for this object to be called from worker threads
